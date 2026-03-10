@@ -2,23 +2,31 @@
 #define MAX 20
 
 /* Priority Non-Preemptive */
-void priority_np(int n,int at[],int bt[],int pr[]){
+void priority_np(int n,int at[],int bt[],int pr[])
+{
 int wt[MAX]={0},tat[MAX],rt[MAX],ct[MAX],done[MAX]={0};
 int time=0,count=0;
 float sw=0,st=0,sr=0;
 
-while(count<n){
+printf("\nGantt Chart:\n|");
+
+while(count<n)
+{
 int idx=-1,min=9999;
 
 for(int i=0;i<n;i++)
-if(at[i]<=time && !done[i] && pr[i]<min){
+if(at[i]<=time && !done[i] && pr[i]<min)
+{
 min=pr[i];
 idx=i;
 }
 
-if(idx!=-1){
+if(idx!=-1)
+{
 rt[idx]=time-at[idx];
 wt[idx]=time-at[idx];
+
+printf(" P%d |",idx+1);
 
 time+=bt[idx];
 
@@ -32,10 +40,16 @@ else
 time++;
 }
 
-printf("\nPID\tAT\tBT\tCT\tWT\tTAT\tRT\n");
+printf("\n0");
 
-for(int i=0;i<n;i++){
-printf("%d\t %d\t %d\t %d\t %d\t %d\t %d\n",
+for(int i=0;i<n;i++)
+printf("   %d",ct[i]);
+
+printf("\n\nPID AT BT CT WT TAT RT\n");
+
+for(int i=0;i<n;i++)
+{
+printf("%d %d %d %d %d %d %d\n",
 i+1,at[i],bt[i],ct[i],wt[i],tat[i],rt[i]);
 
 sw+=wt[i];
@@ -43,16 +57,20 @@ st+=tat[i];
 sr+=rt[i];
 }
 
-printf("\nAvg WT=%.2f\nAvg TAT=%.2f\nAvg RT=%.2f\n",
-sw/n,st/n,sr/n);
+printf("\nAvg WT=%.2f",sw/n);
+printf("\nAvg TAT=%.2f",st/n);
+printf("\nAvg RT=%.2f\n",sr/n);
 }
 
 
 /* Priority Preemptive */
-void priority_p(int n,int at[],int bt[],int pr[]){
+void priority_p(int n,int at[],int bt[],int pr[])
+{
+
 int rt_bt[MAX],wt[MAX]={0},tat[MAX],rt[MAX],ct[MAX];
 
-for(int i=0;i<n;i++){
+for(int i=0;i<n;i++)
+{
 rt_bt[i]=bt[i];
 rt[i]=-1;
 }
@@ -60,17 +78,24 @@ rt[i]=-1;
 int time=0,complete=0;
 float sw=0,st=0,sr=0;
 
-while(complete<n){
+printf("\nGantt Chart:\n|");
+
+while(complete<n)
+{
 
 int idx=-1,min=9999;
 
 for(int i=0;i<n;i++)
-if(at[i]<=time && rt_bt[i]>0 && pr[i]<min){
+if(at[i]<=time && rt_bt[i]>0 && pr[i]<min)
+{
 min=pr[i];
 idx=i;
 }
 
-if(idx!=-1){
+if(idx!=-1)
+{
+
+printf(" P%d |",idx+1);
 
 if(rt[idx]==-1)
 rt[idx]=time-at[idx];
@@ -78,7 +103,8 @@ rt[idx]=time-at[idx];
 rt_bt[idx]--;
 time++;
 
-if(rt_bt[idx]==0){
+if(rt_bt[idx]==0)
+{
 
 complete++;
 
@@ -94,60 +120,73 @@ time++;
 
 }
 
-printf("\nPID\tAT\tBT\tCT\tWT\tTAT\tRT\n");
+printf("\n0   %d\n",time);
 
-for(int i=0;i<n;i++){
+printf("\nPID AT BT CT WT TAT RT\n");
 
-printf("%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
+for(int i=0;i<n;i++)
+{
+printf("%d %d %d %d %d %d %d\n",
 i+1,at[i],bt[i],ct[i],wt[i],tat[i],rt[i]);
 
 sw+=wt[i];
 st+=tat[i];
 sr+=rt[i];
-
 }
 
-printf("\nAvg WT=%.2f\nAvg TAT=%.2f\nAvg RT=%.2f\n",
-sw/n,st/n,sr/n);
+printf("\nAvg WT=%.2f",sw/n);
+printf("\nAvg TAT=%.2f",st/n);
+printf("\nAvg RT=%.2f\n",sr/n);
+
 }
 
 
 /* Round Robin */
-void rr(int n,int at[],int bt[],int q){
+void rr(int n,int at[],int bt[],int q)
+{
 
 int rt_bt[MAX],wt[MAX]={0},tat[MAX],rt[MAX],ct[MAX];
-int done[MAX]={0};
+int time=0,complete=0;
 
-for(int i=0;i<n;i++){
+for(int i=0;i<n;i++)
+{
 rt_bt[i]=bt[i];
 rt[i]=-1;
 }
 
-int time=0,complete=0;
 float sw=0,st=0,sr=0;
 
-while(complete<n){
+printf("\nGantt Chart:\n|");
 
-for(int i=0;i<n;i++){
+while(complete<n)
+{
 
-if(at[i]<=time && rt_bt[i]>0){
+for(int i=0;i<n;i++)
+{
+
+if(at[i]<=time && rt_bt[i]>0)
+{
+
+printf(" P%d |",i+1);
 
 if(rt[i]==-1)
 rt[i]=time-at[i];
 
-if(rt_bt[i]>q){
+if(rt_bt[i]>q)
+{
 time+=q;
 rt_bt[i]-=q;
 }
-else{
+else
+{
 
 time+=rt_bt[i];
-ct[i]=time;
-rt_bt[i]=0;
 
+ct[i]=time;
 tat[i]=ct[i]-at[i];
 wt[i]=tat[i]-bt[i];
 
+rt_bt[i]=0;
 complete++;
 
 }
@@ -160,11 +199,14 @@ time++;
 
 }
 
-printf("\nPID\tAT\tBT\tCT\tWT\tTAT\tRT\n");
+printf("\n0   %d\n",time);
 
-for(int i=0;i<n;i++){
+printf("\nPID AT BT CT WT TAT RT\n");
 
-printf("%d\t %d\t%d\t %d\t %d\t %d\t %d\n",
+for(int i=0;i<n;i++)
+{
+
+printf("%d %d %d %d %d %d %d\n",
 i+1,at[i],bt[i],ct[i],wt[i],tat[i],rt[i]);
 
 sw+=wt[i];
@@ -173,35 +215,37 @@ sr+=rt[i];
 
 }
 
-printf("\nAvg WT=%.2f\nAvg TAT=%.2f\nAvg RT=%.2f\n",
-sw/n,st/n,sr/n);
+printf("\nAvg WT=%.2f",sw/n);
+printf("\nAvg TAT=%.2f",st/n);
+printf("\nAvg RT=%.2f\n",sr/n);
 
 }
 
 
-int main(){
+int main()
+{
 
 int n,choice,q;
 int at[MAX],bt[MAX],pr[MAX];
 
-printf("Processes: ");
+printf("Enter number of processes: ");
 scanf("%d",&n);
 
-for(int i=0;i<n;i++){
-
-printf("AT BT PR for P%d: ",i+1);
+for(int i=0;i<n;i++)
+{
+printf("Enter AT BT PR for P%d: ",i+1);
 scanf("%d%d%d",&at[i],&bt[i],&pr[i]);
-
 }
 
-printf("\n1.Priority Non-Preemptive");
-printf("\n2.Priority Preemptive");
-printf("\n3.Round Robin");
+printf("\n1. Priority Non-Preemptive");
+printf("\n2. Priority Preemptive");
+printf("\n3. Round Robin");
 
-printf("\nChoice: ");
+printf("\nEnter choice: ");
 scanf("%d",&choice);
 
-switch(choice){
+switch(choice)
+{
 
 case 1:
 priority_np(n,at,bt,pr);
@@ -212,12 +256,16 @@ priority_p(n,at,bt,pr);
 break;
 
 case 3:
-printf("Quantum: ");
+printf("Enter Time Quantum: ");
 scanf("%d",&q);
 rr(n,at,bt,q);
 break;
+
+default:
+printf("Invalid Choice");
 
 }
 
 return 0;
 }
+
