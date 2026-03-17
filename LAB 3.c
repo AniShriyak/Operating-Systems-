@@ -56,13 +56,13 @@ printf(" P%d |",g[i]+1);
 printf("\n");
 
 for(int i=0;i<=k;i++)
-printf("%d ",gt[i]);
+printf("%d    ",gt[i]);
 
-printf("\n\nPID AT BT CT WT TAT RT\n");
+printf("\n\nPID\tAT\tBT\tCT\tWT\tTAT\tRT\n");
 
 for(int i=0;i<n;i++)
 {
-printf("%d %d %d %d %d %d %d\n",
+printf("%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
 i+1,at[i],bt[i],ct[i],wt[i],tat[i],rt[i]);
 
 sw+=wt[i];
@@ -140,13 +140,13 @@ printf(" P%d |",g[i]+1);
 printf("\n");
 
 for(int i=0;i<=k;i++)
-printf("%d ",gt[i]);
+printf("%d    ",gt[i]);
 
-printf("\n\nPID AT BT CT WT TAT RT\n");
+printf("\n\nPID\tAT\tBT\tCT\tWT\tTAT\tRT\n");
 
 for(int i=0;i<n;i++)
 {
-printf("%d %d %d %d %d %d %d\n",
+printf("%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
 i+1,at[i],bt[i],ct[i],wt[i],tat[i],rt[i]);
 
 sw+=wt[i];
@@ -222,13 +222,13 @@ printf(" P%d |",g[i]+1);
 printf("\n");
 
 for(int i=0;i<=k;i++)
-printf("%d ",gt[i]);
+printf("%d    ",gt[i]);
 
-printf("\n\nPID AT BT CT WT TAT RT\n");
+printf("\n\nPID\tAT\tBT\tCT\tWT\tTAT\tRT\n");
 
 for(int i=0;i<n;i++)
 {
-printf("%d %d %d %d %d %d %d\n",
+printf("%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
 i+1,at[i],bt[i],ct[i],wt[i],tat[i],rt[i]);
 
 sw+=wt[i];
